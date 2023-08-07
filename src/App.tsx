@@ -1,4 +1,4 @@
-import { Center, OrbitControls } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { NoToneMapping, Vector3 } from "three";
 import { Perf } from "r3f-perf";
@@ -18,9 +18,7 @@ export default function App() {
       <Perf position="top-left" />
       <OrbitControls />
 
-      <Center>
-        <PortalScene />
-      </Center>
+      <PortalScene />
     </Canvas>
   );
 }
