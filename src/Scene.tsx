@@ -1,16 +1,5 @@
 import { type GLTF } from "three-stdlib";
-import {
-  Sparkles,
-  shaderMaterial,
-  useGLTF,
-  useTexture,
-} from "@react-three/drei";
-import { Color, ShaderMaterial } from "three";
-import { extend, useFrame } from "@react-three/fiber";
-import { useRef } from "react";
-
-import portalVertexShader from "./shaders/vertex.glsl";
-import portalFragmentShader from "./shaders/fragment.glsl";
+import { Sparkles, useGLTF, useTexture } from "@react-three/drei";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -21,27 +10,9 @@ type GLTFResult = GLTF & {
   };
 };
 
-const PortalMaterial = shaderMaterial(
-  {
-    uTime: 0,
-    uColorStart: new Color("#000000"),
-    uColorEnd: new Color("#ffffff"),
-  },
-  portalVertexShader,
-  portalFragmentShader
-);
-
-extend({ PortalMaterial });
-
 export function PortalScene() {
-  const portalMaterial = useRef<ShaderMaterial>();
-
   const { nodes } = useGLTF("/model/portal.glb") as GLTFResult;
   const texture = useTexture("/model/baked.jpg");
-
-  useFrame((_, delta) => {
-    portalMaterial.current.uTime += delta;
-  });
 
   return (
     <group>
@@ -68,7 +39,7 @@ export function PortalScene() {
         position={nodes.portalLight.position}
         rotation={nodes.portalLight.rotation}
       >
-        <portalMaterial ref={portalMaterial} />
+        <meshBasicMaterial color="#ffffff" />
       </mesh>
 
       <Sparkles
